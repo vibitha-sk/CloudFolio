@@ -1,0 +1,1328 @@
+<!--line - 1164 change function app url-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume API — Cloud Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #0a0a0f;
+            --surface: #111118;
+            --border: #1e1e2e;
+            --accent: #00e5ff;
+            --accent2: #7c3aed;
+            --text: #e8e8f0;
+            --muted: #6b6b80;
+            --card: #14141f;
+            --success: #00ffa3;
+            --warning: #ffb800;
+            --error: #ff4d6d;
+            --font-display: 'Syne', sans-serif;
+            --font-mono: 'DM Mono', monospace;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-display);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Background grid */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+            background-size: 48px 48px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Glow orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: rgba(124, 58, 237, 0.12);
+            top: -200px;
+            right: -200px;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: rgba(0, 229, 255, 0.07);
+            bottom: 100px;
+            left: -150px;
+        }
+
+        /* NAV */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 48px;
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-transform: uppercase;
+        }
+
+        .nav-logo span {
+            color: var(--text);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--muted);
+            font-size: 13px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* HERO */
+        .hero {
+            position: relative;
+            z-index: 1;
+            padding: 120px 48px 80px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 24px;
+        }
+
+        .hero-eyebrow::before {
+            content: '';
+            display: block;
+            width: 24px;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        h1 {
+            font-size: clamp(48px, 7vw, 88px);
+            font-weight: 800;
+            line-height: 1.0;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+        }
+
+        h1 em {
+            font-style: normal;
+            color: transparent;
+            -webkit-text-stroke: 1px var(--accent);
+        }
+
+        .hero-sub {
+            font-family: var(--font-mono);
+            font-size: 15px;
+            color: var(--muted);
+            max-width: 520px;
+            line-height: 1.7;
+            margin-bottom: 48px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            font-family: var(--font-display);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg);
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+        }
+
+        .btn-primary:hover {
+            background: #33eaff;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* STATUS BAR */
+        .status-bar {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            padding: 16px 48px;
+            max-width: 1100px;
+            margin: 0 auto 80px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            font-family: var(--font-mono);
+            font-size: 12px;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .dot-green {
+            background: var(--success);
+            box-shadow: 0 0 6px var(--success);
+        }
+
+        .dot-blue {
+            background: var(--accent);
+            box-shadow: 0 0 6px var(--accent);
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.4;
+            }
+        }
+
+        /* SECTIONS */
+        section {
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+            margin: 0 auto 100px;
+            padding: 0 48px;
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 40px;
+        }
+
+        /* RESUME OUTPUT */
+        #resume-section {}
+
+        .api-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            background: #0d0d18;
+            border: 1px solid var(--border);
+            border-bottom: none;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .method-badge {
+            padding: 3px 10px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            background: rgba(0, 229, 255, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+        }
+
+        .api-url {
+            color: var(--text);
+        }
+
+        .api-url span {
+            color: var(--accent2);
+        }
+
+        .fetch-btn {
+            margin-left: auto;
+            padding: 6px 16px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            background: var(--accent);
+            color: var(--bg);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .fetch-btn:hover {
+            background: #33eaff;
+        }
+
+        .fetch-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .resume-container {
+            border: 1px solid var(--border);
+            background: var(--card);
+            min-height: 400px;
+        }
+
+        /* Loading state */
+        .loading-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            padding: 80px;
+            color: var(--muted);
+            font-family: var(--font-mono);
+            font-size: 13px;
+        }
+
+        .spinner {
+            width: 32px;
+            height: 32px;
+            border: 2px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Resume card */
+        .resume-card {
+            display: none;
+            padding: 40px;
+        }
+
+        .resume-card.visible {
+            display: block;
+        }
+
+        .resume-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 40px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .resume-name {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .resume-title {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--accent);
+            margin-top: 6px;
+        }
+
+        .resume-contacts {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: flex-end;
+        }
+
+        .contact-item {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contact-item a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .resume-grid {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 48px;
+        }
+
+        .resume-section-title {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-family: var(--font-mono);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .resume-section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .experience-item {
+            margin-bottom: 28px;
+        }
+
+        .exp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 4px;
+        }
+
+        .exp-role {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .exp-date {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .exp-company {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--accent2);
+            margin-bottom: 10px;
+        }
+
+        .exp-desc {
+            font-size: 13px;
+            line-height: 1.7;
+            color: #a0a0b8;
+        }
+
+        .exp-desc li {
+            margin-left: 16px;
+            margin-bottom: 4px;
+        }
+
+        .skill-category {
+            margin-bottom: 20px;
+        }
+
+        .skill-category-name {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 10px;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .skill-tag {
+            padding: 4px 10px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+        }
+
+        .skill-tag.highlight {
+            color: var(--accent);
+            background: rgba(0, 229, 255, 0.06);
+            border-color: rgba(0, 229, 255, 0.2);
+        }
+
+        .edu-item {
+            margin-bottom: 20px;
+        }
+
+        .edu-degree {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .edu-school {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        .edu-year {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--accent);
+            margin-top: 2px;
+        }
+
+        .cert-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            margin-bottom: 8px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+        }
+
+        .cert-icon {
+            color: var(--warning);
+            font-size: 14px;
+        }
+
+        /* ERROR STATE */
+        .error-state {
+            display: none;
+            padding: 48px;
+            text-align: center;
+            font-family: var(--font-mono);
+        }
+
+        .error-state.visible {
+            display: block;
+        }
+
+        .error-code {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--error);
+            opacity: 0.3;
+            margin-bottom: 8px;
+        }
+
+        .error-msg {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 24px;
+        }
+
+        /* ARCH DIAGRAM */
+        .arch-diagram {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            flex-wrap: wrap;
+            overflow: hidden;
+        }
+
+        .arch-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .arch-icon {
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            position: relative;
+        }
+
+        .arch-icon::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.15), transparent 60%);
+            pointer-events: none;
+        }
+
+        .arch-node-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--muted);
+            text-align: center;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .arch-node-sublabel {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            color: var(--accent);
+            text-align: center;
+            margin-top: -6px;
+        }
+
+        .arch-arrow {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            padding: 0 16px;
+            margin-bottom: 20px;
+        }
+
+        .arch-line {
+            height: 1px;
+            width: 40px;
+            background: linear-gradient(90deg, var(--border), var(--accent));
+        }
+
+        .arch-arrow-label {
+            position: absolute;
+            font-family: var(--font-mono);
+            font-size: 9px;
+            color: var(--muted);
+            white-space: nowrap;
+            transform: translateY(-14px);
+        }
+
+        .arch-arrow-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        /* CDN badge */
+        .arch-cdn {
+            position: relative;
+        }
+
+        .arch-cdn::before {
+            content: 'CDN';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: var(--font-mono);
+            font-size: 9px;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            padding: 1px 6px;
+        }
+
+        /* TECH STACK GRID */
+        .stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+        }
+
+        .stack-card {
+            background: var(--card);
+            padding: 28px 24px;
+            transition: background 0.2s;
+        }
+
+        .stack-card:hover {
+            background: var(--surface);
+        }
+
+        .stack-card-icon {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .stack-card-name {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .stack-card-desc {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        /* RAW JSON panel */
+        .json-panel {
+            display: none;
+            background: #070710;
+            border: 1px solid var(--border);
+            border-top: none;
+            padding: 24px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            line-height: 1.8;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .json-panel.visible {
+            display: block;
+        }
+
+        .json-key {
+            color: #7dd3fc;
+        }
+
+        .json-str {
+            color: #86efac;
+        }
+
+        .json-num {
+            color: #fde68a;
+        }
+
+        .json-bool {
+            color: #f9a8d4;
+        }
+
+        .json-null {
+            color: var(--muted);
+        }
+
+        .view-toggle {
+            display: flex;
+            border: 1px solid var(--border);
+            border-top: none;
+            border-bottom: none;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 10px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: transparent;
+            color: var(--muted);
+            border: none;
+            cursor: pointer;
+            border-right: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .toggle-btn:last-child {
+            border-right: none;
+        }
+
+        .toggle-btn.active {
+            background: rgba(0, 229, 255, 0.08);
+            color: var(--accent);
+        }
+
+        /* FOOTER */
+        footer {
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid var(--border);
+            padding: 32px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        footer span {
+            color: var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 16px 24px;
+            }
+
+            .hero {
+                padding: 80px 24px 48px;
+            }
+
+            section {
+                padding: 0 24px;
+            }
+
+            .status-bar {
+                padding: 12px 24px;
+                gap: 16px;
+                flex-wrap: wrap;
+            }
+
+            .resume-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .resume-header {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .resume-contacts {
+                align-items: flex-start;
+            }
+
+            .arch-diagram {
+                padding: 24px 16px;
+            }
+
+            footer {
+                padding: 24px;
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <nav>
+        <div class="nav-logo">Resume<span>API</span></div>
+        <ul class="nav-links">
+            <li><a href="#resume-section">Resume</a></li>
+            <li><a href="#architecture">Architecture</a></li>
+            <li><a href="#stack">Stack</a></li>
+        </ul>
+    </nav>
+
+    <div class="hero">
+        <div class="hero-eyebrow">Azure Serverless Project</div>
+        <h1>Cloud<br>Resume <em>API</em></h1>
+        <p class="hero-sub">
+            A fully serverless resume API built on Azure — static frontend on Blob Storage + CDN, Python Azure Functions
+            backend, Cosmos DB data layer, deployed via GitHub Actions CI/CD.
+        </p>
+        <div class="hero-actions">
+            <a href="#resume-section" class="btn btn-primary">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 8 16 12 12 16" />
+                    <line x1="8" y1="12" x2="16" y2="12" />
+                </svg>
+                Fetch Resume
+            </a>
+            <a href="#architecture" class="btn btn-outline">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="3" width="6" height="6" rx="1" />
+                    <rect x="9" y="3" width="6" height="6" rx="1" />
+                    <rect x="16" y="3" width="6" height="6" rx="1" />
+                    <rect x="2" y="12" width="6" height="6" rx="1" />
+                    <line x1="9" y1="15" x2="21" y2="15" />
+                </svg>
+                View Architecture
+            </a>
+        </div>
+    </div>
+
+    <div class="status-bar">
+        <div class="status-item">
+            <div class="dot dot-green"></div> API Online
+        </div>
+        <div class="status-item">
+            <div class="dot dot-blue"></div> Cosmos DB Connected
+        </div>
+        <div class="status-item">
+            <div class="dot dot-green"></div> CDN Active
+        </div>
+        <div class="status-item" style="margin-left: auto; font-size: 11px;">
+            Endpoint: <code style="color: var(--accent)">GET /api/resume</code>
+        </div>
+    </div>
+
+    <!-- RESUME SECTION -->
+    <section id="resume-section">
+        <div class="section-label">// Live Data</div>
+        <div class="section-title">Resume</div>
+
+        <div class="api-bar">
+            <span class="method-badge">GET</span>
+            <span class="api-url">https://your-function-app.azurewebsites.net<span>/api/resume</span></span>
+            <button class="fetch-btn" id="fetchBtn" onclick="fetchResume()">▶ Run</button>
+        </div>
+
+        <div class="view-toggle">
+            <button class="toggle-btn active" id="cardToggle" onclick="switchView('card')">Rendered</button>
+            <button class="toggle-btn" id="jsonToggle" onclick="switchView('json')">Raw JSON</button>
+        </div>
+
+        <div class="resume-container" id="resumeContainer">
+            <div class="loading-state" id="loadingState" style="display:none">
+                <div class="spinner"></div>
+                <span>Calling Azure Function...</span>
+            </div>
+
+            <div class="resume-card" id="resumeCard"></div>
+            <div class="error-state" id="errorState">
+                <div class="error-code">404</div>
+                <div class="error-msg">No data yet — click <strong style="color:var(--text)">▶ Run</strong> above to
+                    fetch from the API</div>
+            </div>
+        </div>
+
+        <div class="json-panel" id="jsonPanel"></div>
+    </section>
+
+    <!-- ARCHITECTURE -->
+    <section id="architecture">
+        <div class="section-label">// System Design</div>
+        <div class="section-title">Architecture</div>
+
+        <div class="arch-diagram">
+            <!-- User -->
+            <div class="arch-node">
+                <div class="arch-icon">👤</div>
+                <div class="arch-node-label">User</div>
+                <div class="arch-node-sublabel">Browser</div>
+            </div>
+
+            <div class="arch-arrow-wrap">
+                <div class="arch-arrow">
+                    <div class="arch-line" style="background: linear-gradient(90deg, var(--border), var(--accent));">
+                    </div>
+                    <svg width="10" height="10" viewBox="0 0 10 10">
+                        <path d="M0 5 L10 5 M6 1 L10 5 L6 9" stroke="var(--accent)" stroke-width="1.5" fill="none" />
+                    </svg>
+                </div>
+                <span class="arch-arrow-label">HTTPS</span>
+            </div>
+
+            <!-- CDN + Blob -->
+            <div class="arch-node arch-cdn">
+                <div class="arch-icon">🌐</div>
+                <div class="arch-node-label">Blob Storage</div>
+                <div class="arch-node-sublabel">Static Website</div>
+            </div>
+
+            <div class="arch-arrow-wrap">
+                <div class="arch-arrow">
+                    <div class="arch-line"></div>
+                    <svg width="10" height="10" viewBox="0 0 10 10">
+                        <path d="M0 5 L10 5 M6 1 L10 5 L6 9" stroke="var(--accent)" stroke-width="1.5" fill="none" />
+                    </svg>
+                </div>
+                <span class="arch-arrow-label">API Call</span>
+            </div>
+
+            <!-- Function -->
+            <div class="arch-node">
+                <div class="arch-icon">⚡</div>
+                <div class="arch-node-label">Azure Function</div>
+                <div class="arch-node-sublabel">Python / Node</div>
+            </div>
+
+            <div class="arch-arrow-wrap">
+                <div class="arch-arrow">
+                    <div class="arch-line"></div>
+                    <svg width="10" height="10" viewBox="0 0 10 10">
+                        <path d="M0 5 L10 5 M6 1 L10 5 L6 9" stroke="var(--accent)" stroke-width="1.5" fill="none" />
+                    </svg>
+                </div>
+                <span class="arch-arrow-label">Query</span>
+            </div>
+
+            <!-- Cosmos DB -->
+            <div class="arch-node">
+                <div class="arch-icon">🗄️</div>
+                <div class="arch-node-label">Cosmos DB</div>
+                <div class="arch-node-sublabel">NoSQL JSON</div>
+            </div>
+        </div>
+
+        <div
+            style="margin-top: 1px; background: var(--surface); border: 1px solid var(--border); border-top: none; padding: 20px 28px; font-family: var(--font-mono); font-size: 12px; color: var(--muted); line-height: 1.9;">
+            <strong style="color: var(--text)">Flow:</strong> &nbsp;
+            User browser → CDN-cached static site (Blob Storage) → XHR/Fetch API call → Azure Function (HTTP trigger) →
+            Cosmos DB (NoSQL) → JSON response back to UI
+            <br>
+            <strong style="color: var(--text)">CI/CD:</strong> &nbsp;
+            GitHub Actions — infrastructure provisioning via <code style="color: var(--accent)">az cli</code> shell
+            script + auto-sync resume JSON to Cosmos DB on push
+        </div>
+    </section>
+
+    <!-- TECH STACK -->
+    <section id="stack">
+        <div class="section-label">// Services Used</div>
+        <div class="section-title">Tech Stack</div>
+
+        <div class="stack-grid">
+            <div class="stack-card">
+                <div class="stack-card-icon">💾</div>
+                <div class="stack-card-name">Storage Account</div>
+                <div class="stack-card-desc">Hosts static website files. $web container serves HTML/CSS/JS directly.
+                </div>
+            </div>
+            <div class="stack-card">
+                <div class="stack-card-icon">🌐</div>
+                <div class="stack-card-name">Azure CDN</div>
+                <div class="stack-card-desc">Distributes static assets globally with caching, custom domain & HTTPS.
+                </div>
+            </div>
+            <div class="stack-card">
+                <div class="stack-card-icon">⚡</div>
+                <div class="stack-card-name">Azure Functions</div>
+                <div class="stack-card-desc">HTTP-triggered serverless function (Python/Node.js) — the API layer.</div>
+            </div>
+            <div class="stack-card">
+                <div class="stack-card-icon">🗄️</div>
+                <div class="stack-card-name">Cosmos DB</div>
+                <div class="stack-card-desc">NoSQL JSON store for resume data. Core (Free) SQL API tier works great.
+                </div>
+            </div>
+            <div class="stack-card">
+                <div class="stack-card-icon">🔄</div>
+                <div class="stack-card-name">GitHub Actions</div>
+                <div class="stack-card-desc">CI/CD — infra provisioning via shell + az cli, auto JSON sync to DB.</div>
+            </div>
+            <div class="stack-card">
+                <div class="stack-card-icon">🐚</div>
+                <div class="stack-card-name">Shell + az CLI</div>
+                <div class="stack-card-desc">Bash script provisions all Azure resources declaratively on first run.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <span>Cloud Resume API</span>
+        <span>Built on Azure &nbsp;·&nbsp; Serverless &nbsp;·&nbsp; CI/CD via GitHub Actions</span>
+    </footer>
+
+    <script>
+        // ─── Demo resume data (fallback when no real API is configured) ───────────
+        const demoData = {
+            id: "resume-001",
+            name: "Alex Morgan",
+            title: "Cloud & DevOps Engineer",
+            location: "Seattle, WA",
+            email: "alex.morgan@email.com",
+            github: "github.com/alexmorgan",
+            linkedin: "linkedin.com/in/alexmorgan",
+            summary: "Cloud-native engineer with deep experience in serverless architectures, CI/CD automation, and infrastructure-as-code on Azure and AWS.",
+            experience: [
+                {
+                    role: "Senior Cloud Engineer",
+                    company: "TechScale Inc.",
+                    dates: "2022 – Present",
+                    bullets: [
+                        "Architected serverless event-driven pipelines using Azure Functions, Event Grid, and Service Bus",
+                        "Reduced infrastructure cost by 40% via right-sizing and autoscaling strategies",
+                        "Led migration of 12 microservices from VMs to container-based deployments on AKS"
+                    ]
+                },
+                {
+                    role: "DevOps Engineer",
+                    company: "Cloudify Labs",
+                    dates: "2020 – 2022",
+                    bullets: [
+                        "Built GitHub Actions CI/CD pipelines for 20+ repositories including IaC validation",
+                        "Provisioned Azure resources (Functions, Cosmos DB, Storage, CDN) via az CLI automation scripts",
+                        "Implemented blue/green deployment strategy reducing downtime to near zero"
+                    ]
+                }
+            ],
+            skills: {
+                cloud: ["Azure", "AWS", "GCP"],
+                backend: ["Python", "Node.js", "Go"],
+                devops: ["GitHub Actions", "Terraform", "Docker", "Kubernetes"],
+                databases: ["Cosmos DB", "PostgreSQL", "Redis"],
+                tools: ["az CLI", "Bicep", "ARM Templates", "Prometheus"]
+            },
+            certifications: ["AZ-900 Azure Fundamentals", "AZ-204 Azure Developer Associate", "AWS Solutions Architect"],
+            education: [
+                { degree: "B.S. Computer Science", school: "University of Washington", year: "2019" }
+            ]
+        };
+
+        // ─── State ────────────────────────────────────────────────────────────────
+        let currentView = 'card';
+        let fetchedData = null;
+
+        // Replace with your real Azure Function URL
+        const API_URL = 'https://your-function-app.azurewebsites.net/api/resume';
+
+        // ─── Fetch ────────────────────────────────────────────────────────────────
+        async function fetchResume() {
+            const btn = document.getElementById('fetchBtn');
+            const loading = document.getElementById('loadingState');
+            const card = document.getElementById('resumeCard');
+            const error = document.getElementById('errorState');
+            const json = document.getElementById('jsonPanel');
+
+            // Show loading
+            btn.disabled = true;
+            btn.textContent = '⟳ Fetching...';
+            error.classList.remove('visible');
+            card.classList.remove('visible');
+            json.classList.remove('visible');
+            loading.style.display = 'flex';
+
+            try {
+                const res = await fetch(API_URL, { signal: AbortSignal.timeout(5000) });
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                fetchedData = await res.json();
+            } catch (e) {
+                // Demo fallback — remove this block once real API is connected
+                await new Promise(r => setTimeout(r, 900));
+                fetchedData = demoData;
+                // Uncomment the lines below to show real errors instead of demo:
+                // loading.style.display = 'none';
+                // error.classList.add('visible');
+                // btn.disabled = false; btn.textContent = '▶ Run';
+                // return;
+            }
+
+            loading.style.display = 'none';
+            renderResume(fetchedData);
+            renderJSON(fetchedData);
+            switchView(currentView);
+
+            btn.disabled = false;
+            btn.textContent = '↺ Refresh';
+        }
+
+        // ─── Render Card ──────────────────────────────────────────────────────────
+        function renderResume(data) {
+            const card = document.getElementById('resumeCard');
+            const expHTML = (data.experience || []).map(e => `
+      <div class="experience-item">
+        <div class="exp-header">
+          <span class="exp-role">${e.role}</span>
+          <span class="exp-date">${e.dates}</span>
+        </div>
+        <div class="exp-company">${e.company}</div>
+        <ul class="exp-desc">
+          ${(e.bullets || []).map(b => `<li>${b}</li>`).join('')}
+        </ul>
+      </div>
+    `).join('');
+
+            const skillsHTML = Object.entries(data.skills || {}).map(([cat, items]) => `
+      <div class="skill-category">
+        <div class="skill-category-name">${cat}</div>
+        <div class="skill-tags">
+          ${items.map((s, i) => `<span class="skill-tag ${i < 2 ? 'highlight' : ''}">${s}</span>`).join('')}
+        </div>
+      </div>
+    `).join('');
+
+            const certsHTML = (data.certifications || []).map(c => `
+      <div class="cert-item"><span class="cert-icon">✦</span>${c}</div>
+    `).join('');
+
+            const eduHTML = (data.education || []).map(e => `
+      <div class="edu-item">
+        <div class="edu-degree">${e.degree}</div>
+        <div class="edu-school">${e.school}</div>
+        <div class="edu-year">${e.year}</div>
+      </div>
+    `).join('');
+
+            card.innerHTML = `
+      <div class="resume-header">
+        <div>
+          <div class="resume-name">${data.name}</div>
+          <div class="resume-title">${data.title}</div>
+        </div>
+        <div class="resume-contacts">
+          <div class="contact-item">📍 ${data.location}</div>
+          <div class="contact-item">✉️ <a href="mailto:${data.email}">${data.email}</a></div>
+          <div class="contact-item">🔗 <a href="https://${data.github}" target="_blank">${data.github}</a></div>
+          <div class="contact-item">💼 <a href="https://${data.linkedin}" target="_blank">${data.linkedin}</a></div>
+        </div>
+      </div>
+
+      <div class="resume-grid">
+        <div>
+          <div class="resume-section-title">Experience</div>
+          ${expHTML}
+        </div>
+        <div>
+          <div class="resume-section-title">Skills</div>
+          ${skillsHTML}
+          <div style="margin-top: 28px;">
+            <div class="resume-section-title">Certifications</div>
+            ${certsHTML}
+          </div>
+          <div style="margin-top: 28px;">
+            <div class="resume-section-title">Education</div>
+            ${eduHTML}
+          </div>
+        </div>
+      </div>
+    `;
+        }
+
+        // ─── Render JSON ──────────────────────────────────────────────────────────
+        function renderJSON(data) {
+            const panel = document.getElementById('jsonPanel');
+            panel.innerHTML = syntaxHighlight(JSON.stringify(data, null, 2));
+        }
+
+        function syntaxHighlight(json) {
+            return json.replace(/("(\\u[\da-fA-F]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, match => {
+                let cls = 'json-num';
+                if (/^"/.test(match)) { cls = /:$/.test(match) ? 'json-key' : 'json-str'; }
+                else if (/true|false/.test(match)) cls = 'json-bool';
+                else if (/null/.test(match)) cls = 'json-null';
+                return `<span class="${cls}">${match}</span>`;
+            });
+        }
+
+        // ─── View toggle ──────────────────────────────────────────────────────────
+        function switchView(view) {
+            currentView = view;
+            const card = document.getElementById('resumeCard');
+            const json = document.getElementById('jsonPanel');
+            const cardBtn = document.getElementById('cardToggle');
+            const jsonBtn = document.getElementById('jsonToggle');
+
+            if (!fetchedData) return;
+
+            if (view === 'card') {
+                card.classList.add('visible');
+                json.classList.remove('visible');
+                cardBtn.classList.add('active');
+                jsonBtn.classList.remove('active');
+            } else {
+                card.classList.remove('visible');
+                json.classList.add('visible');
+                jsonBtn.classList.add('active');
+                cardBtn.classList.remove('active');
+            }
+        }
+
+        // ─── Auto-fetch on load ───────────────────────────────────────────────────
+        window.addEventListener('load', () => {
+            // Show initial "no data" state
+            document.getElementById('errorState').classList.add('visible');
+        });
+    </script>
+</body>
+
+
+</html>
