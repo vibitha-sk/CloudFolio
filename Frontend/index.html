@@ -1113,57 +1113,13 @@
     </footer>
 
     <script>
-        // ─── Demo resume data (fallback when no real API is configured) ───────────
-        const demoData = {
-            id: "resume-001",
-            name: "Alex Morgan",
-            title: "Cloud & DevOps Engineer",
-            location: "Seattle, WA",
-            email: "alex.morgan@email.com",
-            github: "github.com/alexmorgan",
-            linkedin: "linkedin.com/in/alexmorgan",
-            summary: "Cloud-native engineer with deep experience in serverless architectures, CI/CD automation, and infrastructure-as-code on Azure and AWS.",
-            experience: [
-                {
-                    role: "Senior Cloud Engineer",
-                    company: "TechScale Inc.",
-                    dates: "2022 – Present",
-                    bullets: [
-                        "Architected serverless event-driven pipelines using Azure Functions, Event Grid, and Service Bus",
-                        "Reduced infrastructure cost by 40% via right-sizing and autoscaling strategies",
-                        "Led migration of 12 microservices from VMs to container-based deployments on AKS"
-                    ]
-                },
-                {
-                    role: "DevOps Engineer",
-                    company: "Cloudify Labs",
-                    dates: "2020 – 2022",
-                    bullets: [
-                        "Built GitHub Actions CI/CD pipelines for 20+ repositories including IaC validation",
-                        "Provisioned Azure resources (Functions, Cosmos DB, Storage, CDN) via az CLI automation scripts",
-                        "Implemented blue/green deployment strategy reducing downtime to near zero"
-                    ]
-                }
-            ],
-            skills: {
-                cloud: ["Azure", "AWS", "GCP"],
-                backend: ["Python", "Node.js", "Go"],
-                devops: ["GitHub Actions", "Terraform", "Docker", "Kubernetes"],
-                databases: ["Cosmos DB", "PostgreSQL", "Redis"],
-                tools: ["az CLI", "Bicep", "ARM Templates", "Prometheus"]
-            },
-            certifications: ["AZ-900 Azure Fundamentals", "AZ-204 Azure Developer Associate", "AWS Solutions Architect"],
-            education: [
-                { degree: "B.S. Computer Science", school: "University of Washington", year: "2019" }
-            ]
-        };
 
         // ─── State ────────────────────────────────────────────────────────────────
         let currentView = 'card';
         let fetchedData = null;
 
         // Replace with your real Azure Function URL
-        const API_URL = 'https://vibiresumeapi.azurewebsites.net/api/resumeapi';
+        const API_URL = 'https://cloudfoliofunctionapp-bqhpc6bgfffqcpe3.canadacentral-01.azurewebsites.net/api/resumeapi?id=Vibitha%20Sureshkumar';
 
         // ─── Fetch ────────────────────────────────────────────────────────────────
         async function fetchResume() {
@@ -1188,12 +1144,11 @@
             } catch (e) {
                 // Demo fallback — remove this block once real API is connected
                 await new Promise(r => setTimeout(r, 900));
-                fetchedData = demoData;
                 // Uncomment the lines below to show real errors instead of demo:
-                // loading.style.display = 'none';
-                // error.classList.add('visible');
-                // btn.disabled = false; btn.textContent = '▶ Run';
-                // return;
+                loading.style.display = 'none';
+                error.classList.add('visible');
+                btn.disabled = false; btn.textContent = '▶ Run';
+                return;
             }
 
             loading.style.display = 'none';
