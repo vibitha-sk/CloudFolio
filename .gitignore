@@ -137,3 +137,10 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+.python_packages
+__pycache__
+.venv
+
+# Azure Functions local settings file
+local.settings.json
