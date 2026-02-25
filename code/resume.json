@@ -1,43 +1,54 @@
 {
-
-    "personal_info": {
-      "name": "Vibitha Sureshkumar",
-      "email": "vibithasureshkumar@gmail.com",
-      "phone": "+1 (437) 849-9379",
-      "location": "Toronto, ON, Canada",
-      "linkedin": "https://www.linkedin.com/in/vibitha-sk?",
-      "github": "https://github.com/vibitha-sk"
-    },
-    "summary": " A CS undergrad student at York University passionate about Cloud Infrastructure, DevOps, and Software Development. I have hands-on experience with cloud platforms, CI/CD pipelines, and building scalable, automated systems. I enjoy infrastructure, automation, and writing clean, purposeful code, and I’m eager to explore internships or co-op opportunities in Cloud, DevOps, or Software Development while connecting with like-minded tech enthusiasts.",
-    "education": [
-      {
-        "degree": "Bachelor of Science in Computer Science",
-        "institution": "York University",
+  "id": "Vibitha Sureshkumar",
+    "basics": {
+        "name": "Vibitha Sureshkumar",
+        "title": "CS Undergrad | Cloud & DevOps Enthusiast",
+        "email": "vibithasureshkumar@gmail.com",
+        "phone": "+1 (437) 849-9379",
         "location": "Toronto, ON, Canada",
-        "graduation_year": "2027"
-      }
-    ],
-    "skills": {
-      "cloud": ["AWS", "Azure"],
-      "devops": ["Docker", "Kubernetes","Terraform","GitHub Actions","Jenkins", "Nginx","Linux"],
-      "languages": ["Python", "Java","Bash","YAML","Html","CSS"],
-      "tools": ["Git","GitHub","Prometheus","Grafana","VS Code"],
-      "concepts": [
-        "CI/CD Pipelines",
-        "Infrastructure as Code (IaC)",
-        "Containerization & Orchestration (Docker, Kubernetes)",
-        "Agile (Scrum)",
-        "Version Control (Git branching, pull requests, code reviews)",
-        "Monitoring & Observability (logs, metrics, alerting)"
-      ]
-    },
-    "certifications": [
-      {
-        "name": "Microsoft Azure Fundamentals",
-        "code": "AZ-900",
-        "issuer": "Microsoft",
-        "date": "Jan 2026"
-      }
-    ]
-  
+        "linkedin": "linkedin.com/in/vibitha-sk",
+        "github": "github.com/vibitha-sk",
+        "summary": "A CS undergrad student at York University passionate about Cloud Infrastructure, DevOps, and Software Development.",
+        "experience": [],
+        "skills": {
+            "cloud": [
+                "AWS",
+                "Azure"
+            ],
+            "devops": [
+                "Docker",
+                "Kubernetes",
+                "Terraform",
+                "GitHub Actions",
+                "Jenkins",
+                "Nginx",
+                "Linux"
+            ],
+            "languages": [
+                "Python",
+                "Java",
+                "Bash",
+                "YAML",
+                "HTML",
+                "CSS"
+            ],
+            "tools": [
+                "Git",
+                "GitHub",
+                "Prometheus",
+                "Grafana",
+                "VS Code"
+            ]
+        },
+        "certifications": [
+            "AZ-900 Azure Fundamentals — Microsoft (Jan 2026)"
+        ],
+        "education": [
+            {
+                "degree": "B.S. Computer Science",
+                "school": "York University",
+                "year": "2027"
+            }
+        ]
+    }
 }
