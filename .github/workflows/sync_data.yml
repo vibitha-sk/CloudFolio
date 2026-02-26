@@ -36,7 +36,7 @@ jobs:
           import os
           from azure.cosmos import CosmosClient
 
-          with open('resume.json', 'r') as f:
+          with open('code/resume.json', 'r') as f:
               resume_data = json.load(f)
 
           client = CosmosClient(os.environ['CosmosDB_URL'], credential=os.environ['CosmosDB_Key'])
