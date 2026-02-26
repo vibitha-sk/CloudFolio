@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "resume.json"
+      - "code/resume.json"
   workflow_dispatch:
 
 jobs:
