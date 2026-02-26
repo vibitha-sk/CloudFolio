@@ -8,3 +8,6 @@ stored in Cosmos DB through an Azure Function, with CI/CD automated by GitHub Ac
 ### 🎯Use Case
 The data used in this project represents a personal resume. Whenever the data is updated, GitHub Actions automatically syncs 
 it to Cosmos DB, and the website reflects the changes instantly.
+
+### 🏗️Setup Architecture
+![demo](demo/architecture_diagram.png)
