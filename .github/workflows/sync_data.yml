@@ -1,0 +1,48 @@
+name: Sync Resume Data to Cosmos DB
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "resume.json"
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: pip install azure-cosmos
+
+      - name: Sync resume.json to Cosmos DB
+        env:
+          CosmosDB_URL: ${{ secrets.CosmosDB_URL }}
+          CosmosDB_Key: ${{ secrets.CosmosDB_Key }}
+          CosmosDB_Database: ${{ secrets.CosmosDB_Database }}
+          CosmosDB_Container: ${{ secrets.CosmosDB_Container }}
+        run: |
+          python - <<EOF
+          import json
+          import os
+          from azure.cosmos import CosmosClient
+
+          with open('resume.json', 'r') as f:
+              resume_data = json.load(f)
+
+          client = CosmosClient(os.environ['CosmosDB_URL'], credential=os.environ['CosmosDB_Key'])
+          database = client.get_database_client(os.environ['CosmosDB_Database'])
+          container = database.get_container_client(os.environ['CosmosDB_Container'])
+
+          container.upsert_item(resume_data)
+          print(f"✅ Successfully synced resume data to Cosmos DB! ID: {resume_data['id']}")
+          EOF
